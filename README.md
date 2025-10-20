@@ -10,25 +10,6 @@ A modern text summarization application built with FastAPI and React. Clipnote h
 - **RESTful API** - Well-documented FastAPI backend
 - **CORS enabled** - Ready for cross-origin requests
 
-## Project Structure
-clipnote/
-├── backend/
-│   ├── app.py              # FastAPI application
-│   ├── summarizer.py       # Text summarization logic
-│   └── requirements.txt    # Python dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── App.jsx         # Main React component
-│   │   ├── App.css         # Component styles
-│   │   ├── main.jsx        # React entry point
-│   │   └── index.css       # Global styles
-│   ├── index.html          # HTML template
-│   ├── package.json        # Node.js dependencies
-│   └── vite.config.js      # Vite configuration
-├── .gitignore
-├── README.md
-└── LICENSE
-
 ## Quick Start
 
 ### Prerequisites
