@@ -14,8 +14,8 @@ jobs:
       - run: pip install -r requirements.txt
       - run: |
           python - <<'PY'
-          from summarizer import textrank_summarize
-          out = textrank_summarize("AI helps summarize text. It saves time. Kittens are cute.", 0.5, 2)
+          from summarizer import summarize_text
+          out = summarize_text("AI helps summarize text. It saves time. Kittens are cute.", 50)
           assert isinstance(out, str) and len(out) > 0
           print("Backend smoke OK")
           PY
