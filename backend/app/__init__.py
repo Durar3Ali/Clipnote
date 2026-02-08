@@ -1,0 +1,1 @@
+"""Clipnote backend application package."""

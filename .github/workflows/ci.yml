@@ -4,21 +4,28 @@ on:
   pull_request:
 
 jobs:
-  backend-smoke:
+  backend-tests:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: backend } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
-      - run: pip install -r requirements.txt
-      - run: |
-          python - <<'PY'
-          from summarizer import summarize_text
-          out = summarize_text("AI helps summarize text. It saves time. Kittens are cute.", 50)
-          assert isinstance(out, str) and len(out) > 0
-          print("Backend smoke OK")
-          PY
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Install ruff
+        run: pip install ruff
+      - name: Run ruff linter
+        run: ruff check .
+      - name: Run ruff formatter check
+        run: ruff format --check .
+      - name: Run pytest tests
+        run: pytest -v
+      - name: Smoke test import
+        run: |
+          python -c "from app.services.summarizer import summarize_text; text = 'AI helps summarize text. It saves time. Kittens are cute. This extra sentence ensures the text meets minimum length requirements.'; out = summarize_text(text, mode='standard'); assert isinstance(out, str) and len(out) > 0; print('Backend smoke OK')"
 
   frontend-build:
     runs-on: ubuntu-latest
@@ -27,5 +34,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: '20' }
-      - run: npm ci
-      - run: npm run build
+      - name: Install dependencies
+        run: npm ci
+      - name: Run ESLint
+        run: npm run lint
+      - name: Build frontend
+        run: npm run build
